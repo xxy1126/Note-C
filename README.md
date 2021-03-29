@@ -1,4 +1,4 @@
-# Note-E-language
+# Note-C++
 The note and the lab.
 
 ## Note
