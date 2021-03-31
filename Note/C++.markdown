@@ -261,7 +261,7 @@ The ability to define the behavior or implementation of one class as a superset 
 
 only child class and itself can access.
 
-![](Picture/1-14-2.png)
+![](Picture/1-14-2.PNG)
 
 ## 1.16 子类父类关系
 
