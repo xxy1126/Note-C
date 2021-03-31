@@ -1,4 +1,4 @@
-#### 1.5 头文件
+## 1.5 头文件
 
  **Definition of  a class**
 
@@ -43,7 +43,7 @@
 
 3. The contents of a header file is surrounded with #ifndef #define #endif (otherwise it may be defined repeatly)
 
-#### 1.6 时钟的例子
+## 1.6 时钟的例子
 
 We need to create 2 class. One class is named ClockDisplay and the other is named NumberDisplay.The ClockDisplay includes 2 NumberDisplay to represent minute and hour.
 
@@ -67,7 +67,7 @@ class ClockDisplay {
 }
 ```
 
-#### 1.7 成员变量
+## 1.7 成员变量
 
 **Fields, parameters,local variables**
 
@@ -81,7 +81,7 @@ parameters is mostly the same as local variables.
 
 the functions are belong to one class,but the fields are belong to one object.
 
-#### 1.8 构造与析构
+## 1.8 构造与析构
 
 **Guaranteed initialization with the constructor**
 
@@ -103,7 +103,7 @@ the functions are belong to one class,but the fields are belong to one object.
   
   - The only evidence for a destructor call is the closing brace of the scope that surrounds the object.
   
-#### 1.9 对象初始化
+## 1.9 对象初始化
 
 **Storage allocation** 
 
@@ -113,7 +113,7 @@ the functions are belong to one class,but the fields are belong to one object.
 
 We must pay attention on the default constructor.
 
-#### 1.10 Dynamic memory allocation 
+## 1.10 Dynamic memory allocation 
 
 **new and delete**
 
@@ -146,7 +146,7 @@ When you use new to create a object, the constructor of the class will be called
 
 And if you use delete to free a object,program will call the destructor first and then free the memory.
 
-#### 1.11 访问限制
+## 1.11 访问限制
 
 **C++ access control** 
 
@@ -170,7 +170,7 @@ The **private** keyword means that no one can access that member except inside f
 - struct defaults to public.
 
 
-#### 1.12 初始化列表
+## 1.12 初始化列表
 
 **Initializer list**
 
@@ -208,7 +208,7 @@ not a initialization
 
 string must have a default constructor
 
-#### 1.13 对象组合
+## 1.13 对象组合
 
 **Composition**
 
@@ -245,7 +245,7 @@ void SavingsAccount :: print() {
 }
 ```
 
-#### 1.14 继承 
+## 1.14 继承 
 
 **Reusing the interface**
 
@@ -263,5 +263,163 @@ only child class and itself can access.
 
 ![](Picture/1-14-2.png)
 
-#### 1.16 子类父类关系
+## 1.16 子类父类关系
+
+**More on constructors**
+
+- Base class is always constructed first
+- If no explict arguments are passed to base class,the Default constructor will be called.
+- Destructors are called in exactly the reverse order of the constructors.
+
+**name hidding**
+
+If the base class have the Overloaded function and the derived class also have the same funtion,the functions belong to base class will be hidden.
+
+![](Picture/1-16-1.PNG)
+
+`void print()` and `void print(int i)` will be hidden in the class B.
+
+## 1.17 函数重载和默认参数
+
+**Function overloading**
+
+same funtion with different arguments list.
+
+**default argument**
+
+A default argument is a value given in the declaration that the compiler automatically inserts if you don't provide a value in the function call.
+
+```c++
+Stash(int size, int initQuantity = 0);
+//if you call " Stash (10) ", it equals to " Stash(10,0) "
+```
+
+ To define a function with an argument list, defaults must be added from right to left.
+
+```c++
+int f1(int n,int m=0,int k=0);
+int f2(int n,int m=0,int k);//illegal
+```
+
+don't use the default value.
+
+## 1-18 内联函数
+
+**Overhead for a function ** 
+
+the process time required by a device prior to the execution of a command.
+
+- Push parameters
+- Push return address
+- Prepare return  values 
+- Pop all pushed 
+
+**Inline Functions** 
+
+An inline function is expanded in place, like a preprocessor macro, so the ovehead of the function call is eliminated.
+
+Repeat inline keyword at declaration and definition.
+
+```c++
+inline int plusOne(int x);
+inline int plusOne(int x) { return ++x; }
+```
+
+An inline function definition may not generate any code in .obj file.
+
+**inline functions in header file**
+
+- you can put inline function's bodies in header file. Then #include it where the function is needed.
+- Never be afraid of muti-definition of inline functions, since they have no body at all.
+- Definitions of inline functions are just declarations.
+
+
+
+**Tradeoff of inline functions**
+
+- Body of the called function is to be inserted into the caller.
+- This may expand the code size.
+- but reduce the overhead of calling time.
+- So it gains speed at the expenses of space.
+- In most cases. it is worth.
+- It is much better than macro in C.It checks the types of the parameters.
+
+**Inline may not in-line** 
+
+The compiler does not have to honor your request to make a function inline. It might decide the function is too large or notice that it calls itself (recursion is not allowed or indeed possible for inline functions),or the feature might not be implemented for your paricular compiler. 
+
+**inline inside classes**
+
+Any functions you define inside a class declaration is automatically an inline.
+
+**inline or not **
+
+inline
+
+- small functions, 2 or 3 lines
+- Frequently called functions, e.g inside loops.
+
+## 1-19 const 
+
+declares a variable to have a constant value.
+
+**Pointers and const ** 
+
+```c++
+char * const q ="abc" // q is const 
+    *q='c';//OK
+	q++;//ERROR
+const char *p="ABCD"//(*p) is const
+    *p='b';//ERROR
+```
+
+ 
+
+**const object** 
+
+if an object is const ,the value in the object is const.
+
+**const member function usage** 
+
+- Repeat the const keyword in the definition as well as the declaration 
+
+  ```c++
+  int get_day() const;
+  int get_day() const { return day;
+  ```
+
+- Function members that do not modify data should be declared const
+
+- const member functions are safe for const objects.
+
+the const value in class should be initialized in initializer list of the constructor.
+
+```c++
+class A {
+    int i;
+   public: 
+    	A(): i(0) {} 
+    	void f() {cout<<"f()"<<endl; }
+    //in fact is "void f(A* this)"
+    	void f() const {cout<<"f()"<<endl; }
+	//in fact is "void f(const A*this)"
+}
+```
+
+
+
+**Passing and returning address**
+
+Passing a whole object may cost you a lot.It is better to pass by a pointer.But it's possible for the programmer to take it and modify the original value.
+
+In fact, whenever you're passing an address into a function , you shoule make it a const if at all possible.
+
+**return type is const **
+
+```c++
+int f1() { return 1; }
+const int f2() { return 1;}
+int a=f1;//OK
+const int b=f2;//OK
+```
 
