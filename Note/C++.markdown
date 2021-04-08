@@ -423,3 +423,118 @@ int a=f1;//OK
 const int b=f2;//OK
 ```
 
+## 1-20 引用
+
+**Declaring references**
+
+- References are a new date type int C++
+
+  ```c++
+  char c;
+  char* p = &c;//a pointer
+  char& r = c; //a reference to a char
+  ```
+
+- - Local or global variables  
+    - ` type& refname = name;`
+    - For ordinary variables, the initial value is required.
+  - In parameter lists and member variables 
+    - `type& refname ` 
+    - Binding defined by caller or constructor.
+
+**References**
+
+Declares **a new name** for an existing object.
+
+```c++
+int  X = 47;
+int& Y = X;//Y is a reference to X
+
+cout<<"Y = "<<Y<<endl; // Y = 47
+Y = 18;
+cout<<"X = "<<X<<endl; // X = 18 
+```
+
+
+
+`int &x = a;` is equal to `int* const x = &a;`
+
+when you use x,the funtion is equal to using (*x) 
+
+
+
+**Rules of references**
+
+References must be initialized when defined
+
+```c++
+void f (int& x);
+f(y);// if the x in the f is changed, y will be changed.
+```
+
+Bindings don't change at run time, unlike pointers.
+
+Assignment changes the object referred-to
+
+```c++
+int&y = x;
+y = 20; // change the value of x
+```
+
+The target of a reference must have a location.
+
+```c++
+void f (int& x);
+f(i*2+1);//WARNING or ERROR
+```
+
+**Pointers vs. References** 
+
+References 
+
+- can't be null.
+- must dependent on an existing variable, they are an alias for an variable.
+- can't change to a new "address" location.
+
+Pointers 
+
+- can be set to null.
+- pointer is independent of existing objects.
+- can change to point to a different address.
+
+**Restrictions**
+
+- No references to references 
+
+- No pointers to references 
+
+  but references to pointers is ok 
+
+  ` void f (int*& p);`
+
+- No arrays of references 
+
+
+
+## 1-21 向上造型
+
+**upcasting**
+
+- Public Inheritance should imply substitution 
+  - If B isa A, you can use a B anywhere an A can be used.
+  - if B isa A, then everything that is true for A is also true of B.
+
+upcasting is the act of converting from a Derived reference or pointer to a base class reference or pointer.
+
+```c++
+class manager: public employee 
+{
+    
+} 
+// manager isa employee
+//employee is base class, manager is derived class
+manager a;
+employee* b = &a; //upcast
+employee& b = a; // upcast
+```
+
